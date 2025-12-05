@@ -13,5 +13,6 @@ Route::get('/user', function (Request $request) {
 Route::post('/user/create', [UserController::class, 'create']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');//middleware sanctum adiona autenticação, tenho q passar o token no Header
 
-Route::get('pokemon/getPokemons', [PokemonController::class, 'getPokemons']);
+Route::get('pokemon/getPokemons', [PokemonController::class, 'getPokemons'])->middleware('auth:sanctum'); 
