@@ -38,6 +38,7 @@ class PokemonController extends Controller
         $poke->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
         $poke->height = $data['height']/10;
         $poke->weight = $data['weight']/10;
+        $poke->types = $data['types'];
 
         return $poke;
         
