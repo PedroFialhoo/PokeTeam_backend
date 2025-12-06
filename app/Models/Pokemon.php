@@ -8,7 +8,7 @@ class Pokemon extends Model
 {
     protected $fillable = [
         'team_id',
-        'id_pokemon',
+        'pokemon_id',
     ];
 
     public $url;
