@@ -77,4 +77,27 @@ class TeamController extends Controller
         return response()->json(['message' => 'Team delete successfully!'], 200);
     }
 
+    public function getAll(Request $r){
+        $teams = $r->user()->teams()->with('pokemons')->get();
+        foreach($teams as $team){
+            foreach ($team->pokemons as $pokemon) {
+                $id = $pokemon->pokemon_id;
+                
+                $url = "https://pokeapi.co/api/v2/pokemon/${id}/";
+                $response = file_get_contents($url);
+                $data = json_decode($response, true);
+
+                $pokemon->name = $data['name'];
+                $pokemon->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
+                $pokemon->height = $data['height']/10;
+                $pokemon->weight = $data['weight']/10;
+                $pokemon->types = $data['types'];
+            }
+        }
+
+        return response()->json([
+            'message' => 'All teams',
+            'teams' => $teams
+        ], 200);
+    }
 }
