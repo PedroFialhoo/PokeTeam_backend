@@ -16,12 +16,13 @@ class Pokemon extends Model
     public $type;
     public $types = [];
     public $photo;
+    public $photo_shiny;
     public $height;
     public $weight;
     public $abilities = [];
     public $status = [];
 
-    protected $appends = ['url','name', 'photo', 'types', 'height', 'weight', 'abilities', 'status'];//pra retornar junto no json do pokemon, mesmo sem estar no banco
+    protected $appends = ['url','name', 'photo', 'photo_shiny', 'types', 'height', 'weight', 'abilities', 'status'];//pra retornar junto no json do pokemon, mesmo sem estar no banco
 
     public function getUrlAttribute(){ 
         return $this->url; 
@@ -31,6 +32,9 @@ class Pokemon extends Model
     }
     public function getPhotoAttribute(){
         return $this->photo; 
+    }
+    public function getPhotoShinyAttribute(){
+        return $this->photo_shiny;
     }
     public function getTypesAttribute(){
         return $this->types; 

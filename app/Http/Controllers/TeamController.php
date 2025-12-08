@@ -120,13 +120,17 @@ class TeamController extends Controller
 
             $pokemon->name = $data['name'];
             $pokemon->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
+            $pokemon->photo_shiny = $data['sprites']['other']['official-artwork']['front_shiny'] ?? null;
             $pokemon->height = $data['height']/10;
             $pokemon->weight = $data['weight']/10;
             $pokemon->types = $data['types'];
+            $pokemon->stats = $data['stats'];
+            $pokemon->abilities = $data['abilities'];
             }
 
         return(response()->json([
                 'message'=>'Team find!',
                 'team' => $team], 200));
     }
+
 }

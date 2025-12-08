@@ -59,9 +59,12 @@ class PokemonController extends Controller
         $poke->id = $data['id'];
         $poke->name = $data['name'];
         $poke->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
+        $poke->photo_shiny = $data['sprites']['other']['official-artwork']['front_shiny'] ?? null;
         $poke->height = $data['height']/10;
         $poke->weight = $data['weight']/10;
         $poke->types = $data['types'];
+        $poke->stats = $data['stats'];
+        $poke->abilities = $data['abilities'];
 
         return response()->json($poke, 200);
         
