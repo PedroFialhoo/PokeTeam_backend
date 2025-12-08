@@ -100,4 +100,33 @@ class TeamController extends Controller
             'teams' => $teams
         ], 200);
     }
+
+    public function getTeamById(Request $r){
+        $r->validate([
+            'team_id' => 'required|integer'
+        ]);
+
+        $team = Team::with('pokemons')->find($r->team_id);
+
+        if(!$team){
+            return(response()->json(['message'=>'Team not found'], 404));
+        }
+        foreach ($team->pokemons as $pokemon) {
+            $id = $pokemon->pokemon_id;
+                
+            $url = "https://pokeapi.co/api/v2/pokemon/${id}/";
+            $response = file_get_contents($url);
+            $data = json_decode($response, true);
+
+            $pokemon->name = $data['name'];
+            $pokemon->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
+            $pokemon->height = $data['height']/10;
+            $pokemon->weight = $data['weight']/10;
+            $pokemon->types = $data['types'];
+            }
+
+        return(response()->json([
+                'message'=>'Team find!',
+                'team' => $team], 200));
+    }
 }

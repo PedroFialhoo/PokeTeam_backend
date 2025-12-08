@@ -52,6 +52,34 @@ class PokemonController extends Controller
         $id = $r->pokemon_id;
         $url = "https://pokeapi.co/api/v2/pokemon/${id}/";
         $response = file_get_contents($url);
+        
+        $data = json_decode($response, true);
+
+        $poke = new Pokemon();
+        $poke->id = $data['id'];
+        $poke->name = $data['name'];
+        $poke->photo = $data['sprites']['other']['official-artwork']['front_default'] ?? null;
+        $poke->height = $data['height']/10;
+        $poke->weight = $data['weight']/10;
+        $poke->types = $data['types'];
+
+        return response()->json($poke, 200);
+        
+    }
+
+    public function getPokemonDetailByName(Request $r){     
+        $r->validate([
+            'name' => 'required|string'
+        ]);
+
+        $name = $r->name;
+        $url = "https://pokeapi.co/api/v2/pokemon/${name}";
+        $response = file_get_contents($url);
+        if (!$response){
+        return response()->json([
+            'message' => 'Pokmon not found'
+        ], 404);
+        }
         $data = json_decode($response, true);
 
         $poke = new Pokemon();
