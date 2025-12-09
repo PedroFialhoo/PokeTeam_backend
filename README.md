@@ -4,7 +4,7 @@
     composer install
     
 ### Create the .env file
-    cp .env.example .env
+    copy .env.example .env
 
 ### Set up the database in .env
     DB_CONNECTION=mysql
