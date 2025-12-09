@@ -21,8 +21,12 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        if(!$user){
+            return response()->json(['message' => 'User not create'], 500);
+        }
+        
         return response()->json([
-            'message' => 'User create successfully!',
+            'message' => 'User create successfully',
             'user' => $user
         ]);
     }
